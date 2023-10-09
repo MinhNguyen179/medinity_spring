@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/student")
 public class StudentController {
@@ -21,6 +19,7 @@ public class StudentController {
 
     @Autowired
     StudentService  studentService;
+
     @PostMapping("/addStudent")
     public void addStudent(@RequestBody Student student) {
         repo.save(student);
@@ -28,7 +27,7 @@ public class StudentController {
     @GetMapping("/listStudents")
     public String listStudent(Model model) {
         model.addAttribute("students", studentService.getAllStudents());
-        return "minh";
+        return "studentList";
     }
     @DeleteMapping("/deleteStudent/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
