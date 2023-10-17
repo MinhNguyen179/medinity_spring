@@ -22,10 +22,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private JwtAuthEntryPoint authEntryPoint;
+    private JWTAuthEntryPoint authEntryPoint;
     private CustomUserDetailsService userDetailsService;
     @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService, JWTAuthEntryPoint authEntryPoint) {
         this.userDetailsService = userDetailsService;
         this.authEntryPoint = authEntryPoint;
     }
