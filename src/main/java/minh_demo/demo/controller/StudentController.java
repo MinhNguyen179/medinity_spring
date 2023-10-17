@@ -2,7 +2,7 @@ package minh_demo.demo.controller;
 
 import minh_demo.demo.model.Student;
 import minh_demo.demo.service.StudentService;
-import minh_demo.demo.repo.StudentRepo;
+import minh_demo.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     @Autowired
-    StudentRepo repo;
+    StudentRepository repo;
 
     @Autowired
     StudentService  studentService;
