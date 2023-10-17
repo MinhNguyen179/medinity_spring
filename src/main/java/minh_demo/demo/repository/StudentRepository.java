@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @RepositoryRestResource
 public interface StudentRepository extends JpaRepository<StudentEntity, Integer> {
-    Optional<Student> findByName(String username);
+    Optional<StudentEntity> findByUsername(String username);
     Boolean existsByUsername(String username);
 }
 

@@ -1,6 +1,7 @@
 package minh_demo.demo.config;
 
 import minh_demo.demo.model.Student;
+import minh_demo.demo.model.Role;
 import minh_demo.demo.model.StudentEntity;
 import minh_demo.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
