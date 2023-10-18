@@ -43,8 +43,8 @@ public class StudentServiceImplement implements StudentService {
     public StudentResponse getAllStudent(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Student> students = studentRepository.findAll(pageable);
-        List<Student> listOfPokemon = students.getContent();
-        List<StudentDTO> content = listOfPokemon.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
+        List<Student> listOfStudent = students.getContent();
+        List<StudentDTO> content = listOfStudent.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
 
         StudentResponse studentResponse = new StudentResponse();
         studentResponse.setContent(content);
@@ -88,7 +88,7 @@ public class StudentServiceImplement implements StudentService {
         return studentDTO;
     }
 
-    private Student mapToEntity(StudentDTO studentDTO) {
+    private Student mapToTeacher(StudentDTO studentDTO) {
         Student student = new Student();
         student.setName(studentDTO.getName());
         student.setAge(studentDTO.getAge());
