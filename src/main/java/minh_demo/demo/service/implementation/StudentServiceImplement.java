@@ -1,20 +1,17 @@
 package minh_demo.demo.service.implementation;
 
-import minh_demo.demo.model.StudentEntity;
 import minh_demo.demo.service.StudentService;
-import org.springframework.stereotype.Service;
-
 import minh_demo.demo.dto.StudentDTO;
 import minh_demo.demo.dto.StudentResponse;
 import minh_demo.demo.exceptions.StudentNotFoundException;
 import minh_demo.demo.model.Student;
 import minh_demo.demo.repository.StudentRepository;
-import minh_demo.demo.service.StudentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 

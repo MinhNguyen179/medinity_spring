@@ -1,12 +1,11 @@
 package minh_demo.demo.controller;
 
 import minh_demo.demo.model.Role;
-import minh_demo.demo.model.Student;
-import minh_demo.demo.model.StudentEntity;
-import minh_demo.demo.repository.StudentRepository;
+import minh_demo.demo.model.Teacher;
 import minh_demo.demo.repository.RoleRepository;
 import minh_demo.demo.dto.*;
 import minh_demo.demo.config.JWTGenerator;
+import minh_demo.demo.repository.TeacherRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +27,16 @@ import java.util.Collections;
 public class AuthController {
 
     private AuthenticationManager authenticationManager;
-    private StudentRepository userRepository;
+    private TeacherRepository teacherRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JWTGenerator jwtGenerator;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, StudentRepository userRepository,
+    public AuthController(AuthenticationManager authenticationManager, TeacherRepository teacherRepository,
                           RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
+        this.teacherRepository = teacherRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtGenerator = jwtGenerator;
@@ -56,18 +55,18 @@ public class AuthController {
 
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDto) {
-        if (userRepository.existsByUsername(registerDto.getUsername())) {
+        if (teacherRepository.existsByUsername(registerDto.getUsername())) {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
 
-        StudentEntity user = new StudentEntity();
+        Teacher user = new Teacher();
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode((registerDto.getPassword())));
 
         Role roles = roleRepository.findByName("USER").get();
         user.setRoles(Collections.singletonList(roles));
 
-        userRepository.save(user);
+        teacherRepository.save(user);
 
         return new ResponseEntity<>("User registered success!", HttpStatus.OK);
     }

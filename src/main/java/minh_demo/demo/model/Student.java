@@ -22,6 +22,4 @@ public class Student {
     private String name;
     private int age;
 
-    @OneToMany(mappedBy = "students", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Student> reviews = new ArrayList<>();
 }
