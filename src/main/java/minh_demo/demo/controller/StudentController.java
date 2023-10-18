@@ -1,5 +1,6 @@
 package minh_demo.demo.controller;
 
+import minh_demo.demo.dto.StudentDTO;
 import minh_demo.demo.dto.StudentResponse;
 import minh_demo.demo.model.Student;
 import minh_demo.demo.service.StudentService;
@@ -18,24 +19,31 @@ public class StudentController {
     @Autowired
     StudentService  studentService;
 
-    @PostMapping("/addStudent")
-    public void addStudent(@RequestBody Student student) {
-        repo.save(student);
-    }
     @GetMapping("/listStudents")
-    public ResponseEntity<StudentResponse> listStudent((
-                                                       @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-                                                       @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    public ResponseEntity<StudentResponse> listStudent(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
     ) {
-        return new ResponseEntity<>(studentService.getAllPokemon(pageNo, pageSize), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getAllStudent(pageNo, pageSize), HttpStatus.OK);
     }
-    @DeleteMapping("/deleteStudent/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
-        try {
-            repo.deleteById(id);
-            return new ResponseEntity<>("Student deleted successfully!", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to delete the student.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/student/{id}")
+    public ResponseEntity<StudentDTO> studentDetail(@PathVariable int id) {
+        return ResponseEntity.ok(studentService.getStudentById(id));    }
+    @PostMapping("student/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO) {
+        return new ResponseEntity<>(studentService.createStudent(studentDTO), HttpStatus.CREATED);
+    }
+
+    @PutMapping("student/{id}/update")
+    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO pokemonDto, @PathVariable("id") int pokemonId) {
+        StudentDTO response = studentService.updateStudent(pokemonDto, pokemonId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("student/{id}/delete")
+    public ResponseEntity<String> deleteStudent(@PathVariable("id") int pokemonId) {
+        studentService.deleteStudent(pokemonId);
+        return new ResponseEntity<>("Student delete", HttpStatus.OK);
     }
 }
