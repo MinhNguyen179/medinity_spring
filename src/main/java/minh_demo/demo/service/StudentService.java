@@ -1,7 +1,14 @@
 package minh_demo.demo.service;
 
+import minh_demo.demo.dto.StudentDTO;
+import minh_demo.demo.dto.StudentResponse;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StudentService {
+public interface StudentService {
+    StudentDTO createStudent(StudentDTO pokemonDto);
+    StudentResponse getAllStudent(int pageNo, int pageSize);
+    StudentDTO getStudentById(int id);
+    StudentDTO updateStudent(StudentDTO pokemonDto, int id);
+    void deleteStudent(int id);
 }

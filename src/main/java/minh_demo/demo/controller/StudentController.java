@@ -1,5 +1,6 @@
 package minh_demo.demo.controller;
 
+import minh_demo.demo.dto.StudentResponse;
 import minh_demo.demo.model.Student;
 import minh_demo.demo.service.StudentService;
 import minh_demo.demo.repository.StudentRepository;
@@ -15,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     @Autowired
-    StudentRepository repo;
-
-    @Autowired
     StudentService  studentService;
 
     @PostMapping("/addStudent")
@@ -25,9 +23,11 @@ public class StudentController {
         repo.save(student);
     }
     @GetMapping("/listStudents")
-    public String listStudent(Model model) {
-        model.addAttribute("students", studentService.getAllStudents());
-        return "studentList";
+    public ResponseEntity<StudentResponse> listStudent((
+                                                       @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                                       @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
+        return new ResponseEntity<>(studentService.getAllPokemon(pageNo, pageSize), HttpStatus.OK);
     }
     @DeleteMapping("/deleteStudent/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
