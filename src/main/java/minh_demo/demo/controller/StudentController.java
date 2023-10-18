@@ -2,14 +2,11 @@ package minh_demo.demo.controller;
 
 import minh_demo.demo.dto.StudentDTO;
 import minh_demo.demo.dto.StudentResponse;
-import minh_demo.demo.model.Student;
 import minh_demo.demo.service.StudentService;
-import minh_demo.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
