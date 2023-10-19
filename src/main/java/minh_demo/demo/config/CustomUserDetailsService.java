@@ -1,9 +1,7 @@
 package minh_demo.demo.config;
 
 import minh_demo.demo.model.Role;
-import minh_demo.demo.model.StudentEntity;
 import minh_demo.demo.model.Teacher;
-import minh_demo.demo.repository.StudentRepository;
 import minh_demo.demo.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,6 +1,5 @@
 package minh_demo.demo.repository;
 
-import minh_demo.demo.model.StudentEntity;
 import minh_demo.demo.model.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
