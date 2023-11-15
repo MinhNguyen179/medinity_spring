@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/")
 public class StudentController {
-
     @Autowired
     StudentService  studentService;
-
     @GetMapping("/listStudents")
     public ResponseEntity<StudentResponse> listStudent(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
