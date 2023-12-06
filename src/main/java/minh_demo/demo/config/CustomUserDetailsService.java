@@ -1,8 +1,8 @@
 package minh_demo.demo.config;
 
 import minh_demo.demo.model.Role;
-import minh_demo.demo.model.Teacher;
-import minh_demo.demo.repository.TeacherRepository;
+import minh_demo.demo.model.Admin;
+import minh_demo.demo.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,16 +19,16 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService  implements UserDetailsService {
 
-    private TeacherRepository teacherRepository;
+    private AdminRepository teacherRepository;
 
     @Autowired
-    public CustomUserDetailsService(TeacherRepository teacherRepository) {
+    public CustomUserDetailsService(AdminRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Teacher user = teacherRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        Admin user = teacherRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
         return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 

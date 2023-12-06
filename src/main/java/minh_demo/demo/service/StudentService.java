@@ -9,6 +9,6 @@ public interface StudentService {
     StudentDTO createStudent(StudentDTO pokemonDto);
     StudentResponse getAllStudent(int pageNo, int pageSize);
     StudentDTO getStudentById(int id);
-    StudentDTO updateStudent(StudentDTO pokemonDto, int id);
+    StudentDTO updateStudent(StudentDTO studentDto, int id);
     void deleteStudent(int id);
 }

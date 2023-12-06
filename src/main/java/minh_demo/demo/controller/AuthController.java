@@ -8,13 +8,13 @@ import minh_demo.demo.dto.request.RegisterDTO;
 import minh_demo.demo.dto.response.AuthResponseDTO;
 import minh_demo.demo.exceptions.InvalidUsernameOrPassword;
 import minh_demo.demo.model.Role;
-import minh_demo.demo.model.Teacher;
+import minh_demo.demo.model.Admin;
 import minh_demo.demo.model.enums.ActionStatus;
 import minh_demo.demo.model.enums.ActionType;
 import minh_demo.demo.model.enums.EntityType;
 import minh_demo.demo.repository.RoleRepository;
 import minh_demo.demo.config.JWTGenerator;
-import minh_demo.demo.repository.TeacherRepository;
+import minh_demo.demo.repository.AdminRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import minh_demo.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,34 +36,34 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-
-    private TeacherRepository teacherRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private JWTGenerator jwtGenerator;
-    @Autowired
-    LoginService loginService;
-
 //    @Autowired
-//    public AuthController(AuthenticationManager authenticationManager, TeacherRepository teacherRepository,
-//                          RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
-//        this.authenticationManager = authenticationManager;
-//        this.teacherRepository = teacherRepository;
-//        this.roleRepository = roleRepository;
-//        this.passwordEncoder = passwordEncoder;
-//        this.jwtGenerator = jwtGenerator;
-//    }
+    private AuthenticationManager authenticationManager;
+//    @Autowired
+
+    private AdminRepository teacherRepository;
+//    @Autowired
+    private RoleRepository roleRepository;
+//    @Autowired
+    private PasswordEncoder passwordEncoder;
+//    @Autowired
+    private JWTGenerator jwtGenerator;
+//    @Autowired
+//    LoginService loginService;
+
+    @Autowired
+    public AuthController(AuthenticationManager authenticationManager, AdminRepository teacherRepository,
+                          RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
+        this.authenticationManager = authenticationManager;
+        this.teacherRepository = teacherRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtGenerator = jwtGenerator;
+    }
 
     @PostMapping("login")
     @Operation(summary = "Login method to get user JWT token data (loginEndpoint)")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequest loginRequest){
-        try{
+//        try{
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(),
@@ -71,16 +71,21 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtGenerator.generateToken(authentication);
             return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
-        } catch (AuthenticationException e) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            loginService.save(LoginDTO.builder()
-                    .entityType(EntityType.USER)
-                    .actionData(objectMapper.valueToTree(loginRequest))
-                    .actionStatus(ActionStatus.FAILURE)
-                    .actionType(ActionType.LOGIN)
-                    .actionFailureDetails("Incorrect email or password").build(), new AppUserDto());
-            throw new InvalidUsernameOrPassword("Incorrect email or password");
-        }
+            /*
+            *
+            *       Working on this later due to the complexity of structure
+            *
+            */
+//        } catch (AuthenticationException e) {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            loginService.save(LoginDTO.builder()
+//                    .entityType(EntityType.USER)
+//                    .actionData(objectMapper.valueToTree(loginRequest))
+//                    .actionStatus(ActionStatus.FAILURE)
+//                    .actionType(ActionType.LOGIN)
+//                    .actionFailureDetails("Incorrect email or password").build(), new AppUserDto());
+//            throw new InvalidUsernameOrPassword("Incorrect email or password");
+//        }
     }
 
     @PostMapping("register")
@@ -89,7 +94,7 @@ public class AuthController {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
 
-        Teacher user = new Teacher();
+        Admin user = new Admin();
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode((registerDto.getPassword())));
 

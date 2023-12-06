@@ -4,8 +4,8 @@ import minh_demo.demo.service.StudentService;
 import minh_demo.demo.dto.model.StudentDTO;
 import minh_demo.demo.dto.response.StudentResponse;
 import minh_demo.demo.exceptions.StudentNotFoundException;
-import minh_demo.demo.model.Student;
-import minh_demo.demo.repository.StudentRepository;
+import minh_demo.demo.model.User;
+import minh_demo.demo.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,20 +17,20 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImplement implements StudentService {
-    private StudentRepository studentRepository;
+    private UserRepository studentRepository;
 
     @Autowired
-    public StudentServiceImplement(StudentRepository studentRepository) {
+    public StudentServiceImplement(UserRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
-        Student student = new Student();
+        User student = new User();
         student.setName(studentDTO.getName());
         student.setAge(studentDTO.getAge());
 
-        Student newStudent = studentRepository.save(student);
+        User newStudent = studentRepository.save(student);
 
         StudentDTO studentResponse = new StudentDTO();
         studentResponse.setId((int) newStudent.getId());
@@ -42,8 +42,8 @@ public class StudentServiceImplement implements StudentService {
     @Override
     public StudentResponse getAllStudent(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Student> students = studentRepository.findAll(pageable);
-        List<Student> listOfStudent = students.getContent();
+        Page<User> students = studentRepository.findAll(pageable);
+        List<User> listOfStudent = students.getContent();
         List<StudentDTO> content = listOfStudent.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
 
         StudentResponse studentResponse = new StudentResponse();
@@ -59,28 +59,28 @@ public class StudentServiceImplement implements StudentService {
 
     @Override
     public StudentDTO getStudentById(int id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student could not be found"));
+        User student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student could not be found"));
         return mapToDto(student);
     }
 
     @Override
     public StudentDTO updateStudent(StudentDTO studentDTO, int id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be updated"));
+        User student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be updated"));
 
         student.setName(studentDTO.getName());
         student.setAge(studentDTO.getAge());
 
-        Student updatedStudent = studentRepository.save(student);
+        User updatedStudent = studentRepository.save(student);
         return mapToDto(updatedStudent);
     }
 
     @Override
     public void deleteStudent(int id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be delete"));
+        User student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be delete"));
         studentRepository.delete(student);
     }
 
-    private StudentDTO mapToDto(Student student) {
+    private StudentDTO mapToDto(User student) {
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setId((int) student.getId());
         studentDTO.setName(student.getName());
@@ -88,8 +88,8 @@ public class StudentServiceImplement implements StudentService {
         return studentDTO;
     }
 
-    private Student mapToTeacher(StudentDTO studentDTO) {
-        Student student = new Student();
+    private User mapToTeacher(StudentDTO studentDTO) {
+        User student = new User();
         student.setName(studentDTO.getName());
         student.setAge(studentDTO.getAge());
         return student;

@@ -8,21 +8,21 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.UUID;
 
-public class LoginServiceImplementation  implements LoginService {
+//public class LoginServiceImplementation  implements LoginService {
 
-    @Override
-    public LoginDTO save(LoginDTO logDto, AppUserDto currentUser) {
-        Log log = new Log();
-        BeanUtils.copyProperties(logDto, log, "createdAt", "createdBy", "actionData");
-        log.setCreatedBy(currentUser.getId());
-        log.setTenantId(currentUser.getTenantId());
-        log.setActionData(logDto.getActionData().toString());
-        Log savedLog = logRepository.save(log);
-        return logMapper.toDto(savedLog);
-    }
+//    @Override
+//    public LoginDTO save(LoginDTO logDto, AppUserDto currentUser) {
+//        Log log = new Log();
+//        BeanUtils.copyProperties(logDto, log, "createdAt", "createdBy", "actionData");
+//        log.setCreatedBy(currentUser.getId());
+//        log.setTenantId(currentUser.getTenantId());
+//        log.setActionData(logDto.getActionData().toString());
+//        Log savedLog = logRepository.save(log);
+//        return logMapper.toDto(savedLog);
+//    }
 
 //    @Override
 //    public LoginDTO save(LoginDTO logDto, UUID currentUserId, UUID tenantId) {
 //        return null;
 //    }
-}
+//}
