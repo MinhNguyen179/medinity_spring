@@ -1,4 +1,4 @@
-package minh_demo.demo.dto;
+package minh_demo.demo.dto.response;
 
 import lombok.Data;
 

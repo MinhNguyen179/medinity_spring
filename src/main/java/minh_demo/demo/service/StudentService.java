@@ -1,7 +1,7 @@
 package minh_demo.demo.service;
 
-import minh_demo.demo.dto.StudentDTO;
-import minh_demo.demo.dto.StudentResponse;
+import minh_demo.demo.dto.model.StudentDTO;
+import minh_demo.demo.dto.response.StudentResponse;
 import org.springframework.stereotype.Service;
 
 @Service

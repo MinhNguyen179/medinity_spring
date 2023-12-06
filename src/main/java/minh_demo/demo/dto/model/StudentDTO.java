@@ -1,4 +1,4 @@
-package minh_demo.demo.dto;
+package minh_demo.demo.dto.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

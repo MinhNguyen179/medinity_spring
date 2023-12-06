@@ -1,8 +1,8 @@
 package minh_demo.demo.service.implementation;
 
 import minh_demo.demo.service.StudentService;
-import minh_demo.demo.dto.StudentDTO;
-import minh_demo.demo.dto.StudentResponse;
+import minh_demo.demo.dto.model.StudentDTO;
+import minh_demo.demo.dto.response.StudentResponse;
 import minh_demo.demo.exceptions.StudentNotFoundException;
 import minh_demo.demo.model.Student;
 import minh_demo.demo.repository.StudentRepository;

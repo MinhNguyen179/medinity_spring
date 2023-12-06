@@ -1,9 +1,11 @@
 package minh_demo.demo.controller;
 
+import minh_demo.demo.dto.request.LoginDTO;
+import minh_demo.demo.dto.request.RegisterDTO;
+import minh_demo.demo.dto.response.AuthResponseDTO;
 import minh_demo.demo.model.Role;
 import minh_demo.demo.model.Teacher;
 import minh_demo.demo.repository.RoleRepository;
-import minh_demo.demo.dto.*;
 import minh_demo.demo.config.JWTGenerator;
 import minh_demo.demo.repository.TeacherRepository;
 
