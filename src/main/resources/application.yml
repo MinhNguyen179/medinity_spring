@@ -1,0 +1,25 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: MedBE-login-service
+  cloud:
+    discovery:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/MedinityDB
+    username: root
+    password: Muaxuan179
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-circular-references: true
