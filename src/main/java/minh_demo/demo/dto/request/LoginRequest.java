@@ -4,11 +4,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+
 @Data
 @NoArgsConstructor
-public class RegisterDTO {
+public class LoginRequest {
+
     @NotEmpty(message = "Email may not be empty")
     private String username;
-    @NotEmpty(message = "Email may not be empty")
+
+    @NotEmpty(message = "Password may not be empty")
     private String password;
 }
