@@ -12,6 +12,11 @@ spring:
     username: root
     password: Muaxuan179
     driverClassName: org.postgresql.Driver
+  management:
+    endpoints:
+    web:
+      exposure:
+      include: "*"
   jpa:
     hibernate:
       ddl-auto: update
