@@ -12,11 +12,6 @@ spring:
     username: root
     password: Muaxuan179
     driverClassName: org.postgresql.Driver
-  management:
-    endpoints:
-    web:
-      exposure:
-      include: "*"
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,3 +23,17 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-circular-references: true
+
+  boot:
+    admin:
+      client:
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

@@ -27,14 +27,14 @@ public class StudentServiceImplement implements StudentService {
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
         User student = new User();
-        student.setName(studentDTO.getName());
+        student.setUsername(studentDTO.getName());
         student.setAge(studentDTO.getAge());
 
         User newStudent = studentRepository.save(student);
 
         StudentDTO studentResponse = new StudentDTO();
         studentResponse.setId((int) newStudent.getId());
-        studentResponse.setName(newStudent.getName());
+        studentResponse.setName(newStudent.getUsername());
         studentResponse.setAge(newStudent.getAge());
         return studentResponse;
     }
@@ -67,7 +67,7 @@ public class StudentServiceImplement implements StudentService {
     public StudentDTO updateStudent(StudentDTO studentDTO, int id) {
         User student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be updated"));
 
-        student.setName(studentDTO.getName());
+        student.setUsername(studentDTO.getName());
         student.setAge(studentDTO.getAge());
 
         User updatedStudent = studentRepository.save(student);
@@ -83,14 +83,14 @@ public class StudentServiceImplement implements StudentService {
     private StudentDTO mapToDto(User student) {
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setId((int) student.getId());
-        studentDTO.setName(student.getName());
+        studentDTO.setName(student.getUsername());
         studentDTO.setAge(student.getAge());
         return studentDTO;
     }
 
     private User mapToTeacher(StudentDTO studentDTO) {
         User student = new User();
-        student.setName(studentDTO.getName());
+        student.setUsername(studentDTO.getName());
         student.setAge(studentDTO.getAge());
         return student;
     }
