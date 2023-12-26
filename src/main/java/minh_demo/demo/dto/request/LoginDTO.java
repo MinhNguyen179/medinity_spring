@@ -16,7 +16,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotEmpty;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDTO {
+public class ItemDTO {
     private int id;
     private String name;
     private int age;

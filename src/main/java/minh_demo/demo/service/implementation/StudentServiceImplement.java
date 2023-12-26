@@ -1,11 +1,12 @@
 package minh_demo.demo.service.implementation;
 
-import minh_demo.demo.service.StudentService;
-import minh_demo.demo.dto.model.StudentDTO;
-import minh_demo.demo.dto.response.StudentResponse;
+import minh_demo.demo.dto.model.ItemDTO;
+import minh_demo.demo.dto.response.ItemResponse;
+import minh_demo.demo.model.Item;
+import minh_demo.demo.service.ItemService;
 import minh_demo.demo.exceptions.StudentNotFoundException;
 import minh_demo.demo.model.User;
-import minh_demo.demo.repository.UserRepository;
+import minh_demo.demo.repository.ItemRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +17,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentServiceImplement implements StudentService {
-    private UserRepository studentRepository;
+public class StudentServiceImplement implements ItemService {
+    private ItemRepository itemRepository;
 
     @Autowired
-    public StudentServiceImplement(UserRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentServiceImplement(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
     }
 
     @Override
-    public StudentDTO createStudent(StudentDTO studentDTO) {
-        User student = new User();
-        student.setUsername(studentDTO.getName());
-        student.setAge(studentDTO.getAge());
+    public ItemDTO createItem(ItemDTO studentDTO) {
+        Item item = new Item();
+        item.setUsername(studentDTO.getName());
+        item.setAge(studentDTO.getAge());
 
-        User newStudent = studentRepository.save(student);
+        Item newStudent = itemRepository.save(item);
 
-        StudentDTO studentResponse = new StudentDTO();
+        ItemDTO studentResponse = new ItemDTO();
         studentResponse.setId((int) newStudent.getId());
         studentResponse.setName(newStudent.getUsername());
         studentResponse.setAge(newStudent.getAge());
@@ -40,13 +41,13 @@ public class StudentServiceImplement implements StudentService {
     }
 
     @Override
-    public StudentResponse getAllStudent(int pageNo, int pageSize) {
+    public ItemResponse getAllItem(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<User> students = studentRepository.findAll(pageable);
-        List<User> listOfStudent = students.getContent();
-        List<StudentDTO> content = listOfStudent.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
+        Page<Item> students = itemRepository.findAll(pageable);
+        List<Item> listOfStudent = students.getContent();
+        List<ItemDTO> content = listOfStudent.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
 
-        StudentResponse studentResponse = new StudentResponse();
+        ItemResponse studentResponse = new ItemResponse();
         studentResponse.setContent(content);
         studentResponse.setPageNo(students.getNumber());
         studentResponse.setPageSize(students.getSize());
@@ -58,40 +59,40 @@ public class StudentServiceImplement implements StudentService {
     }
 
     @Override
-    public StudentDTO getStudentById(int id) {
-        User student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student could not be found"));
+    public ItemDTO getItemById(int id) {
+        Item student = itemRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Student could not be found"));
         return mapToDto(student);
     }
 
     @Override
-    public StudentDTO updateStudent(StudentDTO studentDTO, int id) {
-        User student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be updated"));
+    public ItemDTO updateItem(ItemDTO studentDTO, int id) {
+        Item student = itemRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be updated"));
 
         student.setUsername(studentDTO.getName());
         student.setAge(studentDTO.getAge());
 
-        User updatedStudent = studentRepository.save(student);
+        Item updatedStudent = itemRepository.save(student);
         return mapToDto(updatedStudent);
     }
 
     @Override
-    public void deleteStudent(int id) {
-        User student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be delete"));
-        studentRepository.delete(student);
+    public void deleteItem(int id) {
+        Item student = itemRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Pokemon could not be delete"));
+        itemRepository.delete(student);
     }
 
-    private StudentDTO mapToDto(User student) {
-        StudentDTO studentDTO = new StudentDTO();
-        studentDTO.setId((int) student.getId());
-        studentDTO.setName(student.getUsername());
-        studentDTO.setAge(student.getAge());
-        return studentDTO;
+    private ItemDTO mapToDto(Item student) {
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setId((int) student.getId());
+        itemDTO.setName(student.getUsername());
+        itemDTO.setAge(student.getAge());
+        return itemDTO;
     }
 
-    private User mapToTeacher(StudentDTO studentDTO) {
-        User student = new User();
-        student.setUsername(studentDTO.getName());
-        student.setAge(studentDTO.getAge());
-        return student;
+    private Item mapToTeacher(ItemDTO itemDTO) {
+        Item item = new Item();
+        item.setUsername(itemDTO.getName());
+        item.setAge(itemDTO.getAge());
+        return item;
     }
 }

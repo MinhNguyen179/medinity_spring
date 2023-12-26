@@ -4,12 +4,11 @@ import minh_demo.demo.dto.request.LoginRequest;
 import minh_demo.demo.dto.request.RegisterDTO;
 import minh_demo.demo.dto.response.AuthResponseDTO;
 import minh_demo.demo.model.Role;
-import minh_demo.demo.model.Admin;
+import minh_demo.demo.model.User;
 import minh_demo.demo.repository.RoleRepository;
 import minh_demo.demo.config.JWTGenerator;
-import minh_demo.demo.repository.AdminRepository;
-import io.swagger.v3.oas.annotations.Operation;
 import minh_demo.demo.repository.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,38 +28,19 @@ import java.util.Collections;
 @RequestMapping("/api/auth")
 public class AuthController {
     private AuthenticationManager authenticationManager;
-    private AdminRepository teacherRepository;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JWTGenerator jwtGenerator;
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, AdminRepository teacherRepository, UserRepository userRepository,
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
                           RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
-        this.teacherRepository = teacherRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtGenerator = jwtGenerator;
     }
-/*
-*           Will be updated with Swagger in the future!
-*           LOGIN API
-*           Request Body: LoginRequest
-*           {
-*               "username": "Nguyen Nhat Minh",
-*               "password": "Nguyen Nhat Minh"
-*           }
-*           Response: ResponseEntity
-*           - JWT Token
-*           - HTTP Status
-*               - 200: OK
-*               - 500: Internal Server Error
-*               - 403: Unauthorized
-*               - 404: Page not found
-*
-*/
     @PostMapping("login")
     @Operation(summary = "Login method to get user JWT token data (loginEndpoint)")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequest loginRequest){
@@ -72,11 +52,6 @@ public class AuthController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtGenerator.generateToken(authentication);
             return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
-            /*
-            *
-            *       Working on this later due to the complexity of structure
-            *
-            */
 //        } catch (AuthenticationException e) {
 //            ObjectMapper objectMapper = new ObjectMapper();
 //            loginService.save(LoginDTO.builder()
@@ -88,37 +63,20 @@ public class AuthController {
 //            throw new InvalidUsernameOrPassword("Incorrect email or password");
 //        }
     }
-    /*
-     *           Will be updated with Swagger in the future!
-     *           REGISTER API
-     *           Request Body: RegisterDTO
-     *           {
-     *               "username": "Nguyen Nhat Minh",
-     *               "password": "Nguyen Nhat Minh"
-     *           }
-     *           Response: ResponseEntity
-     *           - Message: User registered success
-     *           - HTTP Status
-     *               - 200: OK
-     *               - 500: Internal Server Error
-     *               - 403: Unauthorized
-     *               - 404: Page not found
-     *
-     */
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDto) {
-        if (teacherRepository.existsByUsername(registerDto.getUsername())) {
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
 
-        Admin user = new Admin();
+        User user = new User();
         user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode((registerDto.getPassword())));
 
         Role roles = roleRepository.findByName("USER").get();
         user.setRoles(Collections.singletonList(roles));
 
-        teacherRepository.save(user);
+        userRepository.save(user);
 
         return new ResponseEntity<>("User registered success!", HttpStatus.OK);
     }
