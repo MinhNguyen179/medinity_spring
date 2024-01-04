@@ -1,8 +1,7 @@
 package minh_demo.demo.service.implementation;
 
-import minh_demo.demo.dto.model.ItemDTO;
 import minh_demo.demo.dto.model.UserDTO;
-import minh_demo.demo.model.Item;
+import minh_demo.demo.dto.response.BasicResponse;
 import minh_demo.demo.model.User;
 import minh_demo.demo.repository.UserRepository;
 import minh_demo.demo.service.UserService;
@@ -21,12 +20,20 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public UserDTO insertUserInfor(UUID userId, UserDTO userDTO) {
+    public BasicResponse insertUserInfor(UUID userId, UserDTO userDTO) {
         User userCredential = userRepository.findById(userId).orElse(
                 new User()
         );
+        BasicResponse basicResponse = new BasicResponse();
         userCredential.setUsername(userDTO.getUsername());
 
-        return userResponse;
+        return basicResponse;
     }
+    // Check if user is logged symptoms for himself or for someone else
+    // if (myselfLogged) {
+    //     userCredential.setUsername(userDTO.getUsername());
+    //     userCredential.setGender(userDTO.getGender());
+    //     userCredential.setPregnant(userDTO.getPregnant());
+    // } else {
+    //     userCredential.setUsername(username);
 }
