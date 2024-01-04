@@ -16,7 +16,7 @@ public class UserDTO {
     private String username;
     private int age;
     private String gender;
-    private Boolean isPregnant;
+    private String pregnant;
     private String extraData;
 
 }

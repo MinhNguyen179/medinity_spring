@@ -6,6 +6,7 @@ import minh_demo.demo.model.User;
 import minh_demo.demo.repository.UserRepository;
 import minh_demo.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.support.BackendId;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -20,20 +21,12 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public BasicResponse insertUserInfor(UUID userId, UserDTO userDTO) {
-        User userCredential = userRepository.findById(userId).orElse(
-                new User()
-        );
-        BasicResponse basicResponse = new BasicResponse();
+    public BasicResponse insertUserInfor(UserDTO userDTO) {
+        User userCredential = userRepository.findById(userDTO.getId()).orElse(new User());
+        userCredential.setAge(userDTO.getAge());
+        userCredential.setGender(userDTO.getGender());
         userCredential.setUsername(userDTO.getUsername());
-
-        return basicResponse;
+        userCredential.setPregnant(userDTO.getPregnant());
+        return new BasicResponse("success", 200, "insert user infor success");
     }
-    // Check if user is logged symptoms for himself or for someone else
-    // if (myselfLogged) {
-    //     userCredential.setUsername(userDTO.getUsername());
-    //     userCredential.setGender(userDTO.getGender());
-    //     userCredential.setPregnant(userDTO.getPregnant());
-    // } else {
-    //     userCredential.setUsername(username);
 }
