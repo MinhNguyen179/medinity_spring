@@ -7,5 +7,7 @@ import java.util.UUID;
 
 public interface UserService {
 
-    BasicResponse insertUserInfor(UserDTO userDTO);
+    BasicResponse insertUserInfor(UserDTO userDTO, int userId);
+
+    BasicResponse insertGuestInfor(UserDTO userDTO);
 }

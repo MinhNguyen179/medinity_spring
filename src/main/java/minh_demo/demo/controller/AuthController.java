@@ -3,8 +3,11 @@ package minh_demo.demo.controller;
 import minh_demo.demo.dto.request.LoginRequest;
 import minh_demo.demo.dto.request.RegisterDTO;
 import minh_demo.demo.dto.response.AuthResponseDTO;
+import minh_demo.demo.exceptions.InvalidUsernameOrPassword;
 import minh_demo.demo.model.Role;
 import minh_demo.demo.model.User;
+
+import javax.naming.AuthenticationException;
 import minh_demo.demo.repository.RoleRepository;
 import minh_demo.demo.config.JWTGenerator;
 import minh_demo.demo.repository.UserRepository;
@@ -44,24 +47,13 @@ public class AuthController {
     @PostMapping("login")
     @Operation(summary = "Login method to get user JWT token data (loginEndpoint)")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequest loginRequest){
-//        try{
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),
-                            loginRequest.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String token = jwtGenerator.generateToken(authentication);
-            return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
-//        } catch (AuthenticationException e) {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            loginService.save(LoginDTO.builder()
-//                    .entityType(EntityType.USER)
-//                    .actionData(objectMapper.valueToTree(loginRequest))
-//                    .actionStatus(ActionStatus.FAILURE)
-//                    .actionType(ActionType.LOGIN)
-//                    .actionFailureDetails("Incorrect email or password").build(), new AppUserDto());
-//            throw new InvalidUsernameOrPassword("Incorrect email or password");
-//        }
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
     }
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDto) {

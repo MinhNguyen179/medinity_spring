@@ -21,12 +21,22 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public BasicResponse insertUserInfor(UserDTO userDTO) {
-        User userCredential = userRepository.findById(userDTO.getId()).orElse(new User());
+    public BasicResponse insertUserInfor(UserDTO userDTO, int userId) {
+        User userCredential = userRepository.findById(userId).orElse(new User());
         userCredential.setAge(userDTO.getAge());
         userCredential.setGender(userDTO.getGender());
         userCredential.setUsername(userDTO.getUsername());
         userCredential.setPregnant(userDTO.getPregnant());
-        return new BasicResponse("success", 200, "insert user infor success");
+        return new BasicResponse("Success", 200, "Insert User Infor Success");
+    }
+
+    @Override
+    public BasicResponse insertGuestInfor(UserDTO userDTO) {
+        User userCredential = new User();
+        userCredential.setAge(userDTO.getAge());
+        userCredential.setGender(userDTO.getGender());
+        userCredential.setUsername(userDTO.getUsername());
+        userCredential.setPregnant(userDTO.getPregnant());
+        return new BasicResponse("Success", 200, "Insert Guest Infor Success");
     }
 }

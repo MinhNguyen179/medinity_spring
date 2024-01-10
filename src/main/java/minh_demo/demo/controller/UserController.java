@@ -31,9 +31,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+    @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -45,8 +49,15 @@ public class UserController {
 
     }
 
-    @GetMapping("/logSymptoms")
-    public ResponseEntity<BasicResponse> logUserSymptoms(@RequestBody UserDTO userDTO) {
-        return new ResponseEntity<>(userService.insertUserInfor(userDTO), HttpStatus.OK);
+    @PostMapping("/log-symptoms")
+    public ResponseEntity<String> logUserSymptoms(@RequestBody UserDTO userDTO) {
+        userService.insertUserInfor(userDTO, userDTO.getId());
+        return new ResponseEntity<>("Success log symptoms", HttpStatus.OK);
+    }
+
+    @PostMapping("/log-guest-symptoms")
+    public ResponseEntity<String> logGuestSymptoms(@RequestBody UserDTO userDTO) {
+        userService.insertGuestInfor(userDTO);
+        return new ResponseEntity<>("Success log symptoms", HttpStatus.OK);
     }
 }
